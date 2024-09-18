@@ -30,6 +30,7 @@ const music = [
 ];
 
 	const mobile = navigator.userAgent.match(/iPhone|Android.+Mobile/);
+	const iOS = window.matchMedia('(max-device-width: 1366px)').matches;
 	const controller = document.querySelector('.controller');
 	const handle = document.querySelector('.handle');
 	const title = document.querySelector('.title');
@@ -57,7 +58,6 @@ const music = [
 		responsive: true,
 		height: 90,
 		barRadius: 0,
-
 	});
 
 	waveSurfer.load(`./${musicSrc}.mp3`);
@@ -78,7 +78,7 @@ const music = [
 		document.removeEventListener('mousemove', draggable);
 	});
 
-	if(mobile) { //* 
+	if(mobile||iOS) { 
 		handle.addEventListener('touchstart', () => { 
 			document.addEventListener('touchmove', draggableMobile);
 		});
@@ -132,14 +132,14 @@ const music = [
 		audio.src = `./${musicSrc}.mp3`; 
 		createWaveSurfer();
 		getCenterPosition(); //*** */
-		if(mobile) { getCenterPosition() } //*** */
+		if(mobile||iOS) { getCenterPosition() } //*** */
 		waveSurfer.load(`./${musicSrc}.mp3`);
 		waveSurfer.on('finish', repeat);
 		waveSurfer.on('ready', () => {
 			waveSurfer.play();
 			playBtn.classList.add('active');
 			volume.classList.add('active');
-			if(mobile) { mobileHandler() }
+			if(mobile||iOS) { mobileHandler() }
 			timeCounter();
 		});
 	}
