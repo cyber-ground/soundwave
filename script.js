@@ -181,7 +181,7 @@ const music = [
 	function timeCounter() {
 		waveSurfer.on('audioprocess', () => {
 			if (waveSurfer.isPlaying()) {
-				let	currentTime = waveSurfer.getCurrentTime();
+				let currentTime = waveSurfer.getCurrentTime();
 				let currentMin = Math.floor(currentTime / 60);
 				let currentSec = Math.floor(currentTime);
 				let remainSec = Math.floor(currentTime % 60);
