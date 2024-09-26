@@ -216,6 +216,6 @@ body {
   transition: 0.5s;
   cursor: pointer;
 }
-.container .controller .handle.active {
+.container .controller .handle.hover {
   opacity: 0.8;
 }

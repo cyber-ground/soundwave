@@ -77,10 +77,10 @@ volume.addEventListener('click', () => {
 });
 
 handle.addEventListener('mouseenter', () => {
-	handle.classList.add('active');
+	handle.classList.add('hover');
 });
 handle.addEventListener('mouseleave', () => {
-	handle.classList.remove('active');
+	handle.classList.remove('hover');
 });
 
 handle.addEventListener('mousedown', () => {
@@ -92,15 +92,15 @@ handle.addEventListener('mouseup', () => {
 
 if(mobile||iOS) { 
 	handle.addEventListener('touchstart', () => { 
-		handle.classList.add('active');
+		handle.classList.add('hover');
 		document.addEventListener('touchmove', draggableMobile);
 	});
 	handle.addEventListener('touchend', () => {
-		handle.classList.remove('active');
+		handle.classList.remove('hover');
 		document.removeEventListener('touchmove', draggableMobile);
 	});
 	handle.addEventListener('click', () => {
-		handle.classList.remove('active');
+		handle.classList.remove('hover');
 	});
 	btns.forEach(btn => {btn.addEventListener('touchstart', () => {})});
 }

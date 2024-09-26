@@ -214,7 +214,7 @@ body {
       opacity: .3;
       transition: .5s;
       cursor: pointer;
-      &.active {
+      &.hover {
         opacity: .8;
       }
     }
