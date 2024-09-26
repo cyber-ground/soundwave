@@ -38,7 +38,7 @@ body {
 @media (max-width: 430px) {
   .container .controller {
     width: 90%;
-    padding: 15px 20px 60px;
+    padding: 15px 20px 100px;
   }
 }
 .container .controller .text {
@@ -52,7 +52,6 @@ body {
 @media (max-width: 430px) {
   .container .controller .text {
     flex-direction: column;
-    align-items: start;
   }
 }
 .container .controller .text .title-wrapper {
@@ -62,6 +61,7 @@ body {
 @media (max-width: 430px) {
   .container .controller .text .title-wrapper {
     flex-direction: column;
+    align-items: center;
   }
 }
 .container .controller .text .title-wrapper h2.logo {
@@ -76,7 +76,7 @@ body {
 @media (max-width: 430px) {
   .container .controller .text .title-wrapper h1.title {
     font-size: 2em;
-    margin: 10px 0;
+    margin: 10px 0 15px;
   }
 }
 .container .controller .text .timestamp-container {
@@ -91,9 +91,9 @@ body {
   width: 90px;
 }
 .container .controller .text .timestamp-container .timestamp-wrapper .volume {
+  position: relative;
   margin-right: 10px;
   font-size: 14px;
-  position: relative;
   cursor: pointer;
 }
 .container .controller .text .timestamp-container .timestamp-wrapper .volume.active {
@@ -125,6 +125,12 @@ body {
   margin-top: 20px;
   width: 100%;
 }
+@media (max-width: 430px) {
+  .container .controller .track {
+    display: block;
+    margin-top: 10px;
+  }
+}
 .container .controller .track .playBtn {
   font-size: 70px;
   margin-right: 30px;
@@ -136,6 +142,11 @@ body {
 @media (max-width: 430px) {
   .container .controller .track .playBtn {
     margin-right: 15px;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 60px;
   }
 }
 .container .controller .track .playBtn.hover {
@@ -164,9 +175,27 @@ body {
   transition: 0.5s;
   cursor: pointer;
 }
+@media (max-width: 430px) {
+  .container .controller .track .btn-wrapper {
+    width: 90%;
+    height: 75px;
+    right: initial;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
 .container .controller .track .btn-wrapper:hover .btn-prev {
   transform: translateX(-40px);
   opacity: 0.3;
+}
+@media (max-width: 430px) {
+  .container .controller .track .btn-wrapper:hover .btn-prev {
+    transform: translateX(-80px);
+  }
 }
 .container .controller .track .btn-wrapper:hover .btn-prev::before {
   opacity: 1;
@@ -188,17 +217,46 @@ body {
   transition: 0.5s ease-in-out;
   opacity: 0.3;
 }
-.container .controller .track .btn-wrapper .btn-prev:hover, .container .controller .track .btn-wrapper .btn-next:hover {
-  opacity: 1;
+@media (min-width: 430px) {
+  .container .controller .track .btn-wrapper .btn-prev:hover, .container .controller .track .btn-wrapper .btn-next:hover {
+    opacity: 0.8;
+  }
+}
+@media (max-width: 430px) {
+  .container .controller .track .btn-wrapper .btn-prev, .container .controller .track .btn-wrapper .btn-next {
+    font-size: 25px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  .container .controller .track .btn-wrapper .btn-prev.hover, .container .controller .track .btn-wrapper .btn-next.hover {
+    opacity: 0.8;
+  }
 }
 .container .controller .track .btn-wrapper .btn-prev {
   opacity: 0;
+}
+@media (max-width: 430px) {
+  .container .controller .track .btn-wrapper .btn-prev {
+    opacity: 0.3;
+    transform: translateX(-80px);
+  }
 }
 .container .controller .track .btn-wrapper .btn-prev::before {
   content: "\f04a";
   margin-right: 3px;
   margin-top: 1px;
   opacity: 0;
+}
+@media (max-width: 430px) {
+  .container .controller .track .btn-wrapper .btn-prev::before {
+    opacity: initial;
+  }
+}
+@media (max-width: 430px) {
+  .container .controller .track .btn-wrapper .btn-next {
+    transform: translateX(80px);
+  }
 }
 .container .controller .track .btn-wrapper .btn-next::before {
   content: "\f04e";
@@ -215,6 +273,11 @@ body {
   opacity: 0.3;
   transition: 0.5s;
   cursor: pointer;
+}
+@media (max-width: 430px) {
+  .container .controller .handle {
+    bottom: 4px;
+  }
 }
 .container .controller .handle.hover {
   opacity: 0.8;

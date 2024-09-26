@@ -103,7 +103,14 @@ if(mobile||iOS) {
 	handle.addEventListener('click', () => {
 		handle.classList.remove('hover');
 	});
-	btns.forEach(btn => {btn.addEventListener('touchstart', () => {})});
+	btns.forEach(btn => {
+		btn.addEventListener('touchstart', () => {
+			btn.classList.add('hover');
+		});
+		btn.addEventListener('touchend', () => {
+			setTimeout(() => { btn.classList.remove('hover')}, 1000);
+		});
+	});
 }
 
 playBtn.addEventListener('mouseenter', () => {
@@ -117,7 +124,7 @@ playBtn.addEventListener('touchstart', () => {
 	playBtn.classList.add('hover');
 });
 playBtn.addEventListener('touchend', () => {
-	setTimeout(() => playBtn.classList.remove('hover'), 2000);
+	setTimeout(() => playBtn.classList.remove('hover'), 1500);
 });
 
 playBtn.addEventListener('click', () => {
@@ -295,7 +302,7 @@ const responsiveWave = waveSurfer.util.debounce(() => {
 		waveSurfer.drawBuffer(); 
 		waveSurfer.seekTo(currentProgress);
 	}
-	setTimeout(() => getCenterPosition(), 0);
+	setTimeout(() => getCenterPosition(), 100);
 	isMatchMediaSvw();
 }, 150);
 window.addEventListener('resize', responsiveWave); 
