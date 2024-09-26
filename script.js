@@ -58,6 +58,7 @@ var waveSurfer = WaveSurfer.create({
 	responsive: true,
 	height: 90,
 	barRadius: 0,
+	hideScrollbar: true,
 });
 
 waveSurfer.load(`./${musicSrc}.mp3`);
@@ -65,10 +66,21 @@ waveSurfer.on('finish', repeat);
 
 //* event ---------------------------
 
+document.addEventListener('touchmove', (evt) => {
+  evt.preventDefault();
+}, {passive: false});
+
 volume.addEventListener('click', () => {
 	if(!playBtn.classList.contains('active')) return;
 	waveSurfer.toggleMute();
 	volume.classList.toggle('active');
+});
+
+handle.addEventListener('mouseenter', () => {
+	handle.classList.add('active');
+});
+handle.addEventListener('mouseleave', () => {
+	handle.classList.remove('active');
 });
 
 handle.addEventListener('mousedown', () => {
@@ -80,13 +92,32 @@ handle.addEventListener('mouseup', () => {
 
 if(mobile||iOS) { 
 	handle.addEventListener('touchstart', () => { 
+		handle.classList.add('active');
 		document.addEventListener('touchmove', draggableMobile);
 	});
 	handle.addEventListener('touchend', () => {
+		handle.classList.remove('active');
 		document.removeEventListener('touchmove', draggableMobile);
+	});
+	handle.addEventListener('click', () => {
+		handle.classList.remove('active');
 	});
 	btns.forEach(btn => {btn.addEventListener('touchstart', () => {})});
 }
+
+playBtn.addEventListener('mouseenter', () => {
+	playBtn.classList.add('hover');
+});
+playBtn.addEventListener('mouseleave', () => {
+	playBtn.classList.remove('hover');
+});
+
+playBtn.addEventListener('touchstart', () => {
+	playBtn.classList.add('hover');
+});
+playBtn.addEventListener('touchend', () => {
+	setTimeout(() => playBtn.classList.remove('hover'), 2000);
+});
 
 playBtn.addEventListener('click', () => {
 	waveSurfer.playPause();
@@ -114,6 +145,21 @@ btns.forEach(btn => {
 
 //* ----------------------------------------------
 
+let matchMediaSvw = false;
+function isMatchMediaSvw() {
+	if(innerWidth < 430) { matchMediaSvw = true }
+	else { matchMediaSvw = false }
+	if(!matchMediaSvw) {
+		if(musicSrc === music[2]) {
+			title.style.fontSize = 'clamp(1em, 2vw, 1.5em)';
+		} else { title.style.fontSize = 'clamp(0.8em, 3vw, 1.8em)'}
+	} else { //* matchMediaSvw true
+		if(musicSrc === music[2]) {
+			title.style.fontSize = 1.3 + 'em';
+		} else { title.style.fontSize = 1.8 + 'em';}
+	}
+} isMatchMediaSvw();
+
 function repeat() {
 	waveSurfer.stop();
 	playBtn.classList.remove('active');
@@ -123,8 +169,10 @@ function repeat() {
 	index++;
 	if(index === music.length) {index = 0}
 	musicSrc = music[index];
-	if(musicSrc === music[2]) {title.style.fontSize = 'clamp(1em, 2vw, 1.5em)'} 
-	else {title.style.fontSize = 'clamp(0.8em, 3vw, 1.8em)'} 
+	isMatchMediaSvw();
+	// if(musicSrc === music[2]) {
+	// 	title.style.fontSize = 'clamp(1em, 2vw, 1.5em)';
+	// } else { title.style.fontSize = 'clamp(0.8em, 3vw, 1.8em)'} 
 	clr = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
 	docElem.style.setProperty('--clr', clr);
 	playBtn.style.setProperty('--clr', clr);
@@ -160,6 +208,7 @@ function createWaveSurfer() {
 		responsive: true,
 		height: 90,
 		barRadius: 0,
+		hideScrollbar: true,
 	});
 }
 
@@ -249,7 +298,8 @@ const responsiveWave = waveSurfer.util.debounce(() => {
 		waveSurfer.drawBuffer(); 
 		waveSurfer.seekTo(currentProgress);
 	}
-	getCenterPosition();
+	setTimeout(() => getCenterPosition(), 0);
+	isMatchMediaSvw();
 }, 150);
 window.addEventListener('resize', responsiveWave); 
 
