@@ -42,6 +42,7 @@ const current = document.getElementById('time-current');
 const docElem = document.documentElement;
 let audio = new Audio(); 
 let savedPeaks = null; 
+let matchMediaSvw = false;
 let repeated = false;
 let index = 0; //*>
 let musicSrc = music[index]; //*>
@@ -145,7 +146,6 @@ btns.forEach(btn => {
 
 //* ----------------------------------------------
 
-let matchMediaSvw = false;
 function isMatchMediaSvw() {
 	if(innerWidth < 430) { matchMediaSvw = true }
 	else { matchMediaSvw = false }
@@ -160,6 +160,21 @@ function isMatchMediaSvw() {
 	}
 } isMatchMediaSvw();
 
+function mobileHandler() {
+	const duration = waveSurfer.getDuration();
+	waveSurfer.on('audioprocess', () => {
+		const current = waveSurfer.getCurrentTime();
+		if(current > duration - 1) { repeated = false }
+	});
+	if(!repeated) {
+		waveSurfer.pause();
+		pEvtDecl('none');
+		playBtn.classList.remove('active');
+		volume.classList.remove('active');
+		waveSurfer.setMute(false);
+	}
+}
+
 function repeat() {
 	waveSurfer.stop();
 	playBtn.classList.remove('active');
@@ -170,9 +185,6 @@ function repeat() {
 	if(index === music.length) {index = 0}
 	musicSrc = music[index];
 	isMatchMediaSvw();
-	// if(musicSrc === music[2]) {
-	// 	title.style.fontSize = 'clamp(1em, 2vw, 1.5em)';
-	// } else { title.style.fontSize = 'clamp(0.8em, 3vw, 1.8em)'} 
 	clr = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
 	docElem.style.setProperty('--clr', clr);
 	playBtn.style.setProperty('--clr', clr);
@@ -210,21 +222,6 @@ function createWaveSurfer() {
 		barRadius: 0,
 		hideScrollbar: true,
 	});
-}
-
-function mobileHandler() {
-	const duration = waveSurfer.getDuration();
-	waveSurfer.on('audioprocess', () => {
-		const current = waveSurfer.getCurrentTime();
-		if(current > duration - 1) { repeated = false }
-	});
-	if(!repeated) {
-		waveSurfer.pause();
-		pEvtDecl('none');
-		playBtn.classList.remove('active');
-		volume.classList.remove('active');
-		waveSurfer.setMute(false);
-	}
 }
 
 function timeCounter() {
