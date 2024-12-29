@@ -27,7 +27,8 @@ body {
   overflow: hidden;
   .controller {
     position: absolute;
-    padding: 30px 30px 60px;
+    padding: 30px 30px 60px; 
+    width: 90%;
     background-color: rgba(255, 255, 255, 0.1);
     box-shadow: 2px 2px 10px rgba(0,0,0,0.5),
     -1px -1px 5px rgba(0,0,0,0.3),
@@ -119,17 +120,19 @@ body {
       }
     }
     .track {
-      display: flex;
-      align-items: center;
-      margin-top: 20px;
-      width: 100%;
+      display: flex; 
+      align-items: center; 
+      margin-top: 20px; 
+      width: 100%; 
       @media (max-width: 430px) {
         display: block;
         margin-top: 10px;
       }
       .playBtn {
+        width: 70px;
+        aspect-ratio: 1; 
         font-size: 70px;
-        margin-right: 30px;
+        margin-right: 10px;
         opacity: .6;
         transition: .5s;
         cursor: pointer;
@@ -140,6 +143,7 @@ body {
           bottom: 30px;
           left: 50%;
           transform: translateX(-50%);
+          width: 60px; 
           font-size: 60px;
         }
         &.hover {
@@ -156,14 +160,14 @@ body {
         }
       }
       .waveForm {
-        flex: 1;
+        flex: 1; 
         pointer-events: var(--pEvt);
         padding-bottom: 5px;
       }
       .btn-wrapper {
         position: absolute;
-        right: 15px;
-        bottom: 10px;
+        right: 15px; 
+        bottom: 10px; 
         width: 50px;
         height: 35px;
         transition: .5s;
