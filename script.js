@@ -31,6 +31,7 @@ const music = [
 
 const mobile = navigator.userAgent.match(/iPhone|Android.+Mobile/);
 const iOS = window.matchMedia('(max-device-width: 1366px)').matches;
+const container = document.querySelector('.container');
 const controller = document.querySelector('.controller');
 const handle = document.querySelector('.handle');
 const title = document.querySelector('.title');
@@ -67,6 +68,11 @@ waveSurfer.on('finish', repeat);
 
 //* event ---------------------------
 
+container.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+	e.stopPropagation();
+});
+
 volume.addEventListener('click', () => {
 	if(!playBtn.classList.contains('active')) return;
 	waveSurfer.toggleMute();
@@ -100,7 +106,8 @@ if(mobile||iOS) {
 		handle.classList.remove('hover');
 	});
 	btns.forEach(btn => {
-		btn.addEventListener('touchstart', () => {
+		btn.addEventListener('touchstart', (e) => { 
+			e.stopPropagation();
 			btn.classList.add('hover');
 		});
 		btn.addEventListener('touchend', () => {
@@ -116,7 +123,8 @@ playBtn.addEventListener('mouseleave', () => {
 	playBtn.classList.remove('hover');
 });
 
-playBtn.addEventListener('touchstart', () => {
+playBtn.addEventListener('touchstart', (e) => { 
+	e.stopPropagation();
 	playBtn.classList.add('hover');
 });
 playBtn.addEventListener('touchend', () => {
@@ -145,6 +153,11 @@ btns.forEach(btn => {
 		repeated = true;
 		repeat();
 	});
+});
+
+const waveForm = document.querySelector('.waveForm');
+waveForm.addEventListener('touchstart', (e) => {
+	e.stopPropagation();
 });
 
 //* ----------------------------------------------
@@ -225,6 +238,10 @@ function createWaveSurfer() {
 		barRadius: 0,
 		hideScrollbar: true,
 	});
+	const newWaveForm = document.querySelector('.waveForm');
+	newWaveForm.addEventListener('touchstart', (e) => {
+		e.stopPropagation();
+	});
 }
 
 function timeCounter() {
@@ -274,7 +291,7 @@ function draggableMobile(e) {
 		setTimeout(getCenterPosition, 100);
 	} else {
 		controller.style.left = e.touches[0].clientX - rect.width / 2 + 'px';
-		controller.style.top = e.touches[0].clientY - rect.height / 1.2 + 'px';
+		controller.style.top = e.touches[0].clientY - rect.height / 1 + 'px';
 	}
 }
 
@@ -304,9 +321,6 @@ const responsiveWave = waveSurfer.util.debounce(() => {
 window.addEventListener('resize', responsiveWave); 
 
 // ------------------------------------------------------------------------------------------
-
-
-
 
 
 
