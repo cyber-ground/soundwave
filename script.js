@@ -68,10 +68,10 @@ waveSurfer.on('finish', repeat);
 
 //* event ---------------------------
 
-container.addEventListener('touchstart', (e) => {
-  e.preventDefault();
-	e.stopPropagation();
-});
+
+// controller.addEventListener('touchstart', (e) => {
+// 	e.stopPropagation();
+// });
 
 volume.addEventListener('click', () => {
 	if(!playBtn.classList.contains('active')) return;
@@ -106,8 +106,8 @@ if(mobile||iOS) {
 		handle.classList.remove('hover');
 	});
 	btns.forEach(btn => {
-		btn.addEventListener('touchstart', (e) => { 
-			e.stopPropagation();
+		btn.addEventListener('touchstart', (e) => { /////////
+			// e.stopPropagation();
 			btn.classList.add('hover');
 		});
 		btn.addEventListener('touchend', () => {
@@ -123,8 +123,8 @@ playBtn.addEventListener('mouseleave', () => {
 	playBtn.classList.remove('hover');
 });
 
-playBtn.addEventListener('touchstart', (e) => { 
-	e.stopPropagation();
+playBtn.addEventListener('touchstart', (e) => { ////////////
+	// e.stopPropagation();
 	playBtn.classList.add('hover');
 });
 playBtn.addEventListener('touchend', () => {
@@ -155,10 +155,10 @@ btns.forEach(btn => {
 	});
 });
 
-const waveForm = document.querySelector('.waveForm');
-waveForm.addEventListener('touchstart', (e) => {
-	e.stopPropagation();
-});
+// const waveForm = document.querySelector('.waveForm');
+// waveForm.addEventListener('touchstart', (e) => {
+// 	e.stopPropagation();
+// });
 
 //* ----------------------------------------------
 
@@ -238,10 +238,10 @@ function createWaveSurfer() {
 		barRadius: 0,
 		hideScrollbar: true,
 	});
-	const newWaveForm = document.querySelector('.waveForm');
-	newWaveForm.addEventListener('touchstart', (e) => {
-		e.stopPropagation();
-	});
+	// const newWaveForm = document.querySelector('.waveForm');
+	// newWaveForm.addEventListener('touchstart', (e) => {
+	// 	e.stopPropagation();
+	// });
 }
 
 function timeCounter() {
@@ -282,7 +282,7 @@ function draggable(e) {
 
 function draggableMobile(e) {
 	const rect = controller.getBoundingClientRect();
-	if(rect.x + rect.width > innerWidth+rect.width/2 || rect.x < -rect.width/2) { //bc3
+	if(rect.x + rect.width > innerWidth+rect.width/3 || rect.x < -rect.width/3) { //bc3
 		document.removeEventListener('touchmove', draggableMobile);
 		setTimeout(getCenterPosition, 100);
 	} else if(rect.y + rect.height - rect.height/3 < 0 
@@ -296,8 +296,9 @@ function draggableMobile(e) {
 }
 
 function getCenterPosition() {
+	const controller = document.querySelector('.controller');
 	const rect = controller.getBoundingClientRect();
-	controller.style.left = innerWidth / 2 - rect.width / 2 + 'px';
+	controller.style.left = innerWidth / 2 - rect.width / 2 +'px';
 	controller.style.top = innerHeight / 2 - rect.height / 2 + 'px';
 }
 
