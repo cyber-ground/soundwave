@@ -67,10 +67,6 @@ waveSurfer.on('finish', repeat);
 
 //* event ---------------------------
 
-document.addEventListener('touchmove', (evt) => {
-  evt.preventDefault();
-}, {passive: false});
-
 volume.addEventListener('click', () => {
 	if(!playBtn.classList.contains('active')) return;
 	waveSurfer.toggleMute();
@@ -269,11 +265,11 @@ function draggable(e) {
 
 function draggableMobile(e) {
 	const rect = controller.getBoundingClientRect();
-	if(rect.x + rect.width > innerWidth+rect.width/3 || rect.x < -rect.width/3) {
+	if(rect.x + rect.width > innerWidth+rect.width/2 || rect.x < -rect.width/2) { //bc3
 		document.removeEventListener('touchmove', draggableMobile);
 		setTimeout(getCenterPosition, 100);
-	} else if(rect.y + rect.height - rect.height/2 < 0 
-		|| rect.y + rect.height > innerHeight-10) {
+	} else if(rect.y + rect.height - rect.height/3 < 0 
+		|| rect.y + rect.height > innerHeight-10) { //bc2
 		document.removeEventListener('touchmove', draggableMobile);
 		setTimeout(getCenterPosition, 100);
 	} else {
@@ -306,8 +302,6 @@ const responsiveWave = waveSurfer.util.debounce(() => {
 	isMatchMediaSvw();
 }, 150);
 window.addEventListener('resize', responsiveWave); 
-
-
 
 // ------------------------------------------------------------------------------------------
 
