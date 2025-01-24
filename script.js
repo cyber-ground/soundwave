@@ -111,19 +111,16 @@ handle.addEventListener('mouseup', () => {
 	document.removeEventListener('mousemove', draggable);
 });
 
-if(mobile||iOS) { 
-	handle.addEventListener('touchstart', () => { 
-		handle.classList.add('hover');
-		document.addEventListener('touchmove', draggableMobile);
-	});
-	handle.addEventListener('touchend', () => {
-		handle.classList.remove('hover');
-		document.removeEventListener('touchmove', draggableMobile);
-	});
-	handle.addEventListener('click', () => {
-		handle.classList.remove('hover');
-	});
-}
+
+handle.addEventListener('touchstart', () => { 
+	handle.classList.add('hover');
+	document.addEventListener('touchmove', draggableMobile);
+});
+handle.addEventListener('touchend', () => {
+	handle.classList.remove('hover');
+	document.removeEventListener('touchmove', draggableMobile);
+});
+
 
 //* playBtn event ---------------------------
 
@@ -141,7 +138,7 @@ playBtn.addEventListener('touchstart', (e) => {
 	playBtn.classList.add('hover');
 });
 
-playBtn.addEventListener('mousedown', (e) => { 
+playBtn.addEventListener('mousedown', () => { 
 	touch = true;
 	setTimeout(() => {touch = false}, 500);
 });
@@ -163,17 +160,15 @@ playBtn.addEventListener('click', (e) => {
 
 //* btns event ---------------------------
 
-if(mobile||iOS) {
-	btns.forEach(btn => {
-		btn.addEventListener('touchstart', (e) => {
-			e.stopPropagation(); //*
-			btn.classList.add('hover');
-		});
-		btn.addEventListener('touchend', () => {
-			setTimeout(() => { btn.classList.remove('hover')}, 1000);
-		});
+btns.forEach(btn => {
+	btn.addEventListener('touchstart', (e) => {
+		e.stopPropagation(); //*
+		btn.classList.add('hover');
 	});
-}
+	btn.addEventListener('touchend', () => {
+		setTimeout(() => { btn.classList.remove('hover')}, 1000);
+	});
+});
 
 btns.forEach(btn => {
 	btn.addEventListener('click', () => {
