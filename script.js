@@ -29,6 +29,7 @@ const music = [
   'Barbara',
 ];
 
+let portrait = window.matchMedia('(orientation: portrait)').matches;
 const mobile = navigator.userAgent.match(/iPhone|Android.+Mobile/);
 const iOS = window.matchMedia('(max-device-width: 1366px)').matches;
 const container = document.querySelector('.container');
@@ -46,6 +47,7 @@ let savedPeaks = null;
 let matchMediaSvw = false;
 let repeated = false;
 let touch = false;
+let dv; // divideVal
 let index = 0; //*>
 let musicSrc = music[index]; //*>
 let clr = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
@@ -67,37 +69,43 @@ var waveSurfer = WaveSurfer.create({
 waveSurfer.load(`./${musicSrc}.mp3`);
 waveSurfer.on('finish', repeat);
 
-//* container event ---------------------------
+//* container event unScalable version -------------
 
 container.addEventListener('touchstart', (e) => {
-	if(touch) { e.preventDefault()}
-	touch = true;
+	e.preventDefault()
 });
 
-container.addEventListener('mousedown', (e) => { 
-	touch = true;
-	setTimeout(() => { touch = false}, 500);
-});
+//* container event scalable version ---------------
 
-container.addEventListener('touchend', () => {
-	touch = false;
-});
+// container.addEventListener('touchstart', (e) => {
+// 	if(touch) { e.preventDefault()}
+// 	touch = true;
+// });
 
-//* controller event ---------------------------
+// container.addEventListener('mousedown', (e) => { 
+// 	touch = true;
+// 	setTimeout(() => { touch = false}, 500);
+// });
 
-controller.addEventListener('touchstart', (e) => {
-	if(!touch) { e.stopPropagation()}
-	touch = true;
-});
+// container.addEventListener('touchend', () => {
+// 	touch = false;
+// });
 
-controller.addEventListener('mousedown', (e) => {
-	touch = true;
-	setTimeout(() => {touch = false}, 500);
-});
+//* controller event scalable version ---------------
 
-controller.addEventListener('touchend', (e) => {
-	touch = false;
-});
+// controller.addEventListener('touchstart', (e) => {
+// 	if(!touch) { e.stopPropagation()}
+// 	touch = true;
+// });
+
+// controller.addEventListener('mousedown', (e) => {
+// 	touch = true;
+// 	setTimeout(() => {touch = false}, 500);
+// });
+
+// controller.addEventListener('touchend', (e) => {
+// 	touch = false;
+// });
 
 //* volume event ---------------------------
 
@@ -212,7 +220,7 @@ btns.forEach(btn => {
 });
 
 //* ----------------------------------------------
-
+//* golden recipe
 function detectTouchWaveForm() {
 	const element = document.querySelector('.waveForm');
 	element.addEventListener('touchstart', (e) => {
@@ -345,11 +353,12 @@ function draggable(e) {
 
 function draggableMobile(e) {
 	const rect = controller.getBoundingClientRect();
-	if(rect.x + rect.width > innerWidth+rect.width/3 || rect.x < -rect.width/3) { //bc3
+	if(portrait) {dv = 2.1} else {dv = 2}
+	if(rect.x + rect.width > innerWidth + rect.width/dv || rect.x < -rect.width/dv) { 
 		document.removeEventListener('touchmove', draggableMobile);
 		setTimeout(getCenterPosition, 100);
 	} else if(rect.y + rect.height - rect.height/3 < 0 
-		|| rect.y + rect.height > innerHeight-10) { //bc2
+		|| rect.y + rect.height > innerHeight-20) { 
 		document.removeEventListener('touchmove', draggableMobile);
 		setTimeout(getCenterPosition, 100);
 	} else {
@@ -381,6 +390,7 @@ const responsiveWave = waveSurfer.util.debounce(() => {
 	}
 	setTimeout(() => getCenterPosition(), 100);
 	isMatchMediaSvw();
+	portrait = window.matchMedia('(orientation: portrait)').matches;
 }, 150);
 window.addEventListener('resize', responsiveWave); 
 
