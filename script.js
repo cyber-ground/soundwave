@@ -141,10 +141,10 @@ handle.addEventListener('mouseleave', () => {
 handle.addEventListener('mousedown', () => {
 	document.addEventListener('mousemove', draggable);
 });
+
 handle.addEventListener('mouseup', () => {
 	document.removeEventListener('mousemove', draggable);
 });
-
 
 handle.addEventListener('touchstart', () => { 
 	handle.classList.add('hover');
@@ -154,7 +154,6 @@ handle.addEventListener('touchend', () => {
 	handle.classList.remove('hover');
 	document.removeEventListener('touchmove', draggableMobile);
 });
-
 
 //* playBtn event ---------------------------
 
@@ -393,6 +392,27 @@ const responsiveWave = waveSurfer.util.debounce(() => {
 	portrait = window.matchMedia('(orientation: portrait)').matches;
 }, 150);
 window.addEventListener('resize', responsiveWave); 
+
+if(!mobile || !iOS) {
+	VanillaTilt.init(document.querySelector(".data-tilt"), {
+		max: 5,
+		speed: 400,
+		perspective: 1000,
+		gyroscope: true,
+		gyroscopeMinAngleX: -95,    
+		gyroscopeMaxAngleX: 95,
+		glare: true,
+		"max-glare": .15,  
+		// gyroscopeMinAngleY: -5,    
+		// gyroscopeMaxAngleY: 5,
+		// reverse: true, 
+		// scale: 1.05, 
+		// easing: "cubic-bezier(.03,.98,.52,.99)",
+	});
+}
+
+
+
 
 // ------------------------------------------------------------------------------------------
 
