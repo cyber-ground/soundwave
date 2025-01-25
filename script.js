@@ -220,7 +220,7 @@ btns.forEach(btn => {
 });
 
 //* ----------------------------------------------
-//* golden recipe
+
 function detectTouchWaveForm() {
 	const element = document.querySelector('.waveForm');
 	element.addEventListener('touchstart', (e) => {
