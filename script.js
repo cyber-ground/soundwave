@@ -67,10 +67,36 @@ var waveSurfer = WaveSurfer.create({
 waveSurfer.load(`./${musicSrc}.mp3`);
 waveSurfer.on('finish', repeat);
 
+//* container event ---------------------------
+
+container.addEventListener('touchstart', (e) => {
+	if(touch) { e.preventDefault()}
+	touch = true;
+});
+
+container.addEventListener('mousedown', (e) => { 
+	touch = true;
+	setTimeout(() => { touch = false}, 500);
+});
+
+container.addEventListener('touchend', () => {
+	touch = false;
+});
+
 //* controller event ---------------------------
 
 controller.addEventListener('touchstart', (e) => {
-	e.preventDefault();
+	if(!touch) { e.stopPropagation()}
+	touch = true;
+});
+
+controller.addEventListener('mousedown', (e) => {
+	touch = true;
+	setTimeout(() => {touch = false}, 500);
+});
+
+controller.addEventListener('touchend', (e) => {
+	touch = false;
 });
 
 //* volume event ---------------------------
